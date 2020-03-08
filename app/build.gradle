@@ -11,7 +11,16 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode 1
         versionName versions.release
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Specifies the fully-qualified class name of the test instrumentation runner.
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        // If set to 'true', enables the instrumentation class to start and stop profiling.
+        // If set to false (default), profiling occurs the entire time the instrumentation
+        // class is running.
+        testHandleProfiling false
+        // If set to 'true', indicates that the Android system should run the instrumentation
+        // class as a functional test. The default value is 'false'
+        testFunctionalTest false
     }
     buildTypes {
         release {
@@ -20,14 +29,30 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         textReport true
         textOutput 'stdout'
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    testOptions {
+        unitTests {
+            returnDefaultValues = false
+            includeAndroidResources = true
+        }
+    }
+    // share test source between local test and androidTest
+    sourceSets {
+        test {
+            java.srcDir 'src/sharedTest/java'
+        }
+        androidTest {
+            java.srcDir 'src/sharedTest/java'
+        }
     }
 }
 
@@ -43,9 +68,21 @@ dependencies {
     implementation deps.androidx.navigation.ui
     implementation deps.androidx.navigation.fragment
     implementation deps.androidx.lifecycle.extensions
-    testImplementation deps.junit
+
+    androidTestImplementation deps.androidx.test.rules, excludeJunit
+    androidTestImplementation deps.androidx.test.runner, excludeJunit
     androidTestImplementation deps.androidx.test.ext, excludeJunit
-    androidTestImplementation deps.androidx.test.expressoCore, excludeJunit
+    androidTestImplementation deps.androidx.test.expresso.core, excludeJunit
+    androidTestImplementation deps.androidx.test.expresso.intents, excludeJunit
+    androidTestImplementation deps.androidx.test.truth, excludeJunit
+    androidTestImplementation deps.roboelectric.annotations
+    androidTestImplementation deps.junit
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation deps.mockito.android
+
+    testImplementation deps.junit
+    // required if you want to use Mockito for unit tests
+    testImplementation deps.mockito.core
 }
 
 afterEvaluate {

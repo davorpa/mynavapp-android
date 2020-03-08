@@ -32,6 +32,10 @@ android {
 }
 
 dependencies {
+    def excludeJunit = {
+        exclude group: 'junit', module: 'junit'
+    }
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.androidx.appcompat
     implementation deps.android.material
@@ -40,8 +44,8 @@ dependencies {
     implementation deps.androidx.navigation.fragment
     implementation deps.androidx.lifecycle.extensions
     testImplementation deps.junit
-    androidTestImplementation deps.androidx.test.ext
-    androidTestImplementation deps.androidx.test.expressoCore
+    androidTestImplementation deps.androidx.test.ext, excludeJunit
+    androidTestImplementation deps.androidx.test.expressoCore, excludeJunit
 }
 
 afterEvaluate {

@@ -44,7 +44,7 @@ buildscript {
             'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
             'tests': "com.android.tools.lint:lint-tests:${versions.androidTools}"
         ],
-        junit: 'junit:junit:4.12'
+        junit: 'junit:junit:4.13'
     ]
 
     repositories {

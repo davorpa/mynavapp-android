@@ -41,7 +41,7 @@ android {
 
     testOptions {
         unitTests {
-            returnDefaultValues = false
+            returnDefaultValues = true
             includeAndroidResources = true
         }
     }
@@ -57,10 +57,6 @@ android {
 }
 
 dependencies {
-    def excludeJunit = {
-        exclude group: 'junit', module: 'junit'
-    }
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.androidx.appcompat
     implementation deps.android.material
@@ -69,13 +65,14 @@ dependencies {
     implementation deps.androidx.navigation.fragment
     implementation deps.androidx.lifecycle.extensions
 
-    androidTestImplementation deps.androidx.test.rules, excludeJunit
-    androidTestImplementation deps.androidx.test.runner, excludeJunit
-    androidTestImplementation deps.androidx.test.ext, excludeJunit
-    androidTestImplementation deps.androidx.test.expresso.core, excludeJunit
-    androidTestImplementation deps.androidx.test.expresso.intents, excludeJunit
-    androidTestImplementation deps.androidx.test.truth, excludeJunit
-    androidTestImplementation deps.roboelectric.annotations
+    androidTestImplementation deps.androidx.test.rules
+    androidTestImplementation deps.androidx.test.runner
+    androidTestImplementation deps.androidx.test.ext
+    androidTestImplementation deps.androidx.test.expresso.core
+    androidTestImplementation deps.androidx.test.expresso.intents
+    androidTestImplementation deps.androidx.test.truth
+    // required if you want to use Robolectric for unit tests
+//    androidTestImplementation deps.robolectric.annotations
     androidTestImplementation deps.junit
     // required if you want to use Mockito for Android tests
     androidTestImplementation deps.mockito.android
@@ -83,6 +80,13 @@ dependencies {
     testImplementation deps.junit
     // required if you want to use Mockito for unit tests
     testImplementation deps.mockito.core
+    // required if you want to use Robolectric for unit tests
+//    testImplementation deps.robolectric.core
+    // required if you want to use Powermock+Mockito for unit tests
+    testImplementation deps.powermock.junit
+    testImplementation deps.powermock.junitRule
+    testImplementation deps.powermock.mockito
+    testImplementation deps.powermock.classloading
 }
 
 afterEvaluate {

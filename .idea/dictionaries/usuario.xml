@@ -3,6 +3,9 @@
     <words>
       <w>bindable</w>
       <w>butterknife</w>
+      <w>checkerframework</w>
+      <w>powermock</w>
+      <w>robolectric</w>
       <w>unbinder</w>
     </words>
   </dictionary>

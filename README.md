@@ -10,7 +10,7 @@ Sample application with Navigation Drawer Activity.
 
 [![Travis Build Status](https://img.shields.io/travis/com/davorpa/mynavapp-android/master?logo=travis&style=flat?label=Build)](https://travis-ci.com/davorpa/mynavapp-android) 
 [![Coverage Status](https://coveralls.io/repos/github/davorpa/mynavapp-android/badge.svg)](https://coveralls.io/github/davorpa/mynavapp-android) 
-[![MIT License](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/davorpa/mynavapp-android/blob/master/LICENSE.txt) 
+[![MIT License](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/davorpa/mynavapp-android/blob/master/LICENSE) 
 
 [![GitHub Repo size](https://img.shields.io/github/repo-size/davorpa/mynavapp-android?label=Repo%20size&logo=github&style=flat)](https://github.com/davorpa/mynavapp-android) 
 [![GitHub Code size](https://img.shields.io/github/languages/code-size/davorpa/mynavapp-android?logo=github&style=flat&label=Code%20size)](https://github.com/davorpa/mynavapp-android) 

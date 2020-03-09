@@ -1,41 +1,46 @@
 # More details on how to configure the Travis build
 # https://docs.travis-ci.com/user/customizing-the-build/
 
+
 # See https://docs.travis-ci.com/user/languages/android/
 language: android
 
 jdk:
   - oraclejdk8
 
-before_install:
-  # Install SDK license so Android Gradle plugin can install dependencies.
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >> "$ANDROID_HOME/licenses/android-sdk-license"
-  # Install the rest of tools (e.g., avdmanager)
-  - sdkmanager tools
-  # Install the system image
-  - sdkmanager "system-images;android-19;default;armeabi-v7a"
-  # Create and start emulator for the script. Meant to race the install task.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-19;default;armeabi-v7a"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
-
-install: ./gradlew clean assemble assembleAndroidTest --stacktrace
-
-before_script:
-  - android-wait-for-emulator
-  - adb shell input keyevent 82
-
-script: ./gradlew check connectedCheck --stacktrace
-
-branches:
-  except:
-    - gh-pages
+env:
+  matrix:
+    - ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
 
 # see https://docs.travis-ci.com/user/notifications/
 notifications:
   # Turn off email notifications entirely
   email: false
+
+android:
+  components:
+    - build-tools-29.0.3
+    - android-29
+    - extra-android-m2repository
+
+    - android-23
+    - sys-img-armeabi-v7a-android-23
+
+before_script:
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - echo "Travis branch is $TRAVIS_BRANCH"
+  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
+
+  - ./gradlew connectedAndroidTest coveralls
+
+branches:
+  except:
+    - gh-pages
 
 # see https://docs.travis-ci.com/user/migrating-from-legacy/ and https://docs.travis-ci.com/user/ci-environment
 sudo: false

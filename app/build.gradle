@@ -1,6 +1,7 @@
 import com.android.build.gradle.internal.tasks.AndroidTestTask
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -23,6 +24,9 @@ android {
         testFunctionalTest false
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -87,6 +91,15 @@ dependencies {
     testImplementation deps.powermock.junitRule
     testImplementation deps.powermock.mockito
     testImplementation deps.powermock.classloading
+}
+
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
+}
+
+tasks.coveralls {
+    dependsOn 'connectedAndroidTest'
+    onlyIf { System.env.'CI' }
 }
 
 afterEvaluate {

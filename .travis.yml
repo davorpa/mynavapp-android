@@ -1,0 +1,52 @@
+# More details on how to configure the Travis build
+# https://docs.travis-ci.com/user/customizing-the-build/
+
+# See https://docs.travis-ci.com/user/languages/android/
+language: android
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  # Install SDK license so Android Gradle plugin can install dependencies.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >> "$ANDROID_HOME/licenses/android-sdk-license"
+  # Install the rest of tools (e.g., avdmanager)
+  - sdkmanager tools
+  # Install the system image
+  - sdkmanager "system-images;android-19;default;armeabi-v7a"
+  # Create and start emulator for the script. Meant to race the install task.
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-19;default;armeabi-v7a"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+
+install: ./gradlew clean assemble assembleAndroidTest --stacktrace
+
+before_script:
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
+
+script: ./gradlew check connectedCheck --stacktrace
+
+branches:
+  except:
+    - gh-pages
+
+# see https://docs.travis-ci.com/user/notifications/
+notifications:
+  # Turn off email notifications entirely
+  email: false
+
+# see https://docs.travis-ci.com/user/migrating-from-legacy/ and https://docs.travis-ci.com/user/ci-environment
+sudo: false
+
+# see https://docs.travis-ci.com/user/languages/android/#caching
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache

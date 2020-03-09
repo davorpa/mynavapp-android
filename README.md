@@ -19,4 +19,3 @@ Sample application with Navigation Drawer Activity.
 [![GitHub Last commit](https://img.shields.io/github/last-commit/davorpa/mynavapp-android?logo=github&style=flat&label=Last%20Commit)](https://github.com/davorpa/mynavapp-android/commit) 
 [![GitHub Downloads](https://img.shields.io/github/downloads/davorpa/mynavapp-android/total?logo=github&style=flat&label=Downloads)](https://github.com/davorpa/mynavapp-android) 
  
-                         ![Coveralls github](https://img.shields.io/coveralls/github/davorpa/mynavapp-android?label=Coverage&logo=coveralls&logoColor=green)

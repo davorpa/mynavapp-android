@@ -5,6 +5,7 @@
       <w>bindable</w>
       <w>butterknife</w>
       <w>checkerframework</w>
+      <w>codecov</w>
       <w>powermock</w>
       <w>robolectric</w>
       <w>unbinder</w>

@@ -10,6 +10,7 @@ Sample application with Navigation Drawer Activity.
 
 [![Travis Build Status](https://img.shields.io/travis/com/davorpa/mynavapp-android/master?logo=travis&style=flat?label=Build)](https://travis-ci.com/davorpa/mynavapp-android) 
 [![Coverage Status](https://coveralls.io/repos/github/davorpa/mynavapp-android/badge.svg)](https://coveralls.io/github/davorpa/mynavapp-android) 
+[![Coveralls Status](https://img.shields.io/coveralls/github/davorpa/mynavapp-android?logo=coveralls&logoColor=a0cfec&style=flat?label=Coverage)](https://coveralls.io/github/davorpa/mynavapp-android)
 [![MIT License](https://img.shields.io/badge/license-Apache--2.0-blue)](https://github.com/davorpa/mynavapp-android/blob/master/LICENSE) 
 
 [![GitHub Repo size](https://img.shields.io/github/repo-size/davorpa/mynavapp-android?label=Repo%20size&logo=github&style=flat)](https://github.com/davorpa/mynavapp-android) 
@@ -17,3 +18,5 @@ Sample application with Navigation Drawer Activity.
 [![GitHub Commit activity](https://img.shields.io/github/commit-activity/m/davorpa/mynavapp-android?logo=github&style=flat&label=Commits)](https://github.com/davorpa/mynavapp-android/commits) 
 [![GitHub Last commit](https://img.shields.io/github/last-commit/davorpa/mynavapp-android?logo=github&style=flat&label=Last%20Commit)](https://github.com/davorpa/mynavapp-android/commit) 
 [![GitHub Downloads](https://img.shields.io/github/downloads/davorpa/mynavapp-android/total?logo=github&style=flat&label=Downloads)](https://github.com/davorpa/mynavapp-android) 
+ 
+                         ![Coveralls github](https://img.shields.io/coveralls/github/davorpa/mynavapp-android?label=Coverage&logo=coveralls&logoColor=green)

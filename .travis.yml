@@ -82,13 +82,18 @@ licenses:
 before_script:
   #Grant permissions
   - chmod +x gradlew
-  - android list targets
+
+  # - android list targets
+
   #Create AVD for given api
   - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+
   #Start emulator
   - emulator -avd test -no-skin -no-audio -no-window &
+
   #Run wait for the emulator script.
   - android-wait-for-emulator
+
   #Display list of devices
   - adb devices
   - adb shell input keyevent 82 &

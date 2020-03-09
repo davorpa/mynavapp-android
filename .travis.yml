@@ -24,9 +24,9 @@ notifications:
 env:
   # Emulation tasks
   matrix:
-    - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
+    # - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
     - ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
-    - ANDROID_TARGET=android-29 ANDROID_ABI=armeabi-v7a
+    # - ANDROID_TARGET=android-29 ANDROID_ABI=armeabi-v7a
   global:   #Optional
     - ADB_INSTALL_TIMEOUT=10    #Time out to 10 minutes
 
@@ -68,9 +68,9 @@ android:
     - extra-android-m2repository
 
     # System images for each emulation task
-    - sys-img-armeabi-v7a-android-19
+    # - sys-img-armeabi-v7a-android-19
     - sys-img-armeabi-v7a-android-23
-    - sys-img-armeabi-v7a-android-29
+    # - sys-img-armeabi-v7a-android-29
 
 
 licenses:

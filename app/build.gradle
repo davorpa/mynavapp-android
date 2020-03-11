@@ -4,14 +4,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.kt3k.coveralls'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.androidTools
+    compileSdkVersion rootProject.versions.compileSdk
+    buildToolsVersion rootProject.versions.androidTools
     defaultConfig {
         applicationId "com.davorpa.labs.androidstudio.mynavapp"
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
+        minSdkVersion rootProject.versions.minSdk
+        targetSdkVersion rootProject.versions.compileSdk
         versionCode 1
-        versionName versions.release
+        versionName rootProject.versions.release
 
         // Specifies the fully-qualified class name of the test instrumentation runner.
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -34,8 +34,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility rootProject.versions.javaSource
+        targetCompatibility rootProject.versions.javaTarget
     }
 
     lintOptions {
@@ -62,35 +62,35 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation deps.androidx.appcompat
-    implementation deps.android.material
-    implementation deps.androidx.constraintlayout
-    implementation deps.androidx.navigation.ui
-    implementation deps.androidx.navigation.fragment
-    implementation deps.androidx.lifecycle.extensions
+    implementation rootProject.deps.androidx.appcompat
+    implementation rootProject.deps.android.material
+    implementation rootProject.deps.androidx.constraintlayout
+    implementation rootProject.deps.androidx.navigation.ui
+    implementation rootProject.deps.androidx.navigation.fragment
+    implementation rootProject.deps.androidx.lifecycle.extensions
 
-    androidTestImplementation deps.androidx.test.rules
-    androidTestImplementation deps.androidx.test.runner
-    androidTestImplementation deps.androidx.test.ext
-    androidTestImplementation deps.androidx.test.expresso.core
-    androidTestImplementation deps.androidx.test.expresso.intents
-    androidTestImplementation deps.androidx.test.truth
+    androidTestImplementation rootProject.deps.androidx.test.rules
+    androidTestImplementation rootProject.deps.androidx.test.runner
+    androidTestImplementation rootProject.deps.androidx.test.junit
+    androidTestImplementation rootProject.deps.androidx.test.expresso.core
+    androidTestImplementation rootProject.deps.androidx.test.expresso.intents
+    androidTestImplementation rootProject.deps.androidx.test.truth
     // required if you want to use Robolectric for unit tests
 //    androidTestImplementation deps.robolectric.annotations
-    androidTestImplementation deps.junit
+    androidTestImplementation rootProject.deps.junit
     // required if you want to use Mockito for Android tests
-    androidTestImplementation deps.mockito.android
+    androidTestImplementation rootProject.deps.mockito.android
 
-    testImplementation deps.junit
+    testImplementation rootProject.deps.junit
     // required if you want to use Mockito for unit tests
-    testImplementation deps.mockito.core
+    testImplementation rootProject.deps.mockito.core
     // required if you want to use Robolectric for unit tests
 //    testImplementation deps.robolectric.core
     // required if you want to use Powermock+Mockito for unit tests
-    testImplementation deps.powermock.junit
-    testImplementation deps.powermock.junitRule
-    testImplementation deps.powermock.mockito
-    testImplementation deps.powermock.classloading
+    testImplementation rootProject.deps.powermock.junit
+    testImplementation rootProject.deps.powermock.junitRule
+    testImplementation rootProject.deps.powermock.mockito
+    testImplementation rootProject.deps.powermock.classloading
 }
 
 coveralls {

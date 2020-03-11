@@ -159,7 +159,7 @@ buildscript {
     }
 }
 
-subprojects { project ->
+subprojects {
     group = GROUP
     version = VERSION_NAME
 

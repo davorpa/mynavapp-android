@@ -43,20 +43,22 @@ android {
         textOutput 'stdout'
     }
 
+    //
+    // Testing
+    //
     testOptions {
-        unitTests {
-            returnDefaultValues = true
-            includeAndroidResources = true
-        }
+        // Easy solution to integrate with mocking frameworks
+        // https://developer.android.com/training/testing/unit-testing/local-unit-tests?hl=es#error-not-mocked
+        unitTests.returnDefaultValues = true
+        // Include framework dependencies (for Robolectric testing)
+        // https://developer.android.com/training/testing/unit-testing/local-unit-tests#include-framework-dependencies
+        unitTests.includeAndroidResources = true
     }
-    // share test source between local test and androidTest
+    // Add share test source between local test and androidTest
+    // https://docs.gradle.org/current/userguide/building_java_projects.html#sec:custom_java_source_set_paths
     sourceSets {
-        test {
-            java.srcDir 'src/sharedTest/java'
-        }
-        androidTest {
-            java.srcDir 'src/sharedTest/java'
-        }
+        test.java.srcDirs += ["src/sharedTest/java"]
+        androidTest.java.srcDirs += ["src/sharedTest/java"]
     }
 }
 

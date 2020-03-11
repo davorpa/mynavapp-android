@@ -3,91 +3,143 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.versions = [
-        'gradlePlugin': "3.5.3",
-        'coverallsPlugin': "2.9.0",
 
+        // Here your project version. Increment when deploy new release and put in next SNAPSHOT
+        // also review gradle.properties of each sub-projects/modules
+        'release': "1.0.0-SNAPSHOT",
+
+        //
+        // Plugins
+        //
+        'gradlePlugins': [
+            'android': "3.5.3",
+            'coveralls': "2.9.0",
+            'versions': "0.28.0"
+        ],
+
+        //
+        // Android SDK/Tools used for compiling
+        //
         'minSdk': 19,
         'compileSdk': 29,
-
         'androidTools': "29.0.3",
-        'androidMaterial': "1.1.0",
-        'androidxCore' : "1.2.0",
-        'androidxAnnotation' : "1.1.0",
-        'androidxAppcompat' : "1.1.0",
-        'androidxConstraintlayout' : "1.1.3",
-        'androidxNavigation' : "2.2.1",
-        'androidxLifecycle' : "2.2.0",
-        'androidxTestRunner': "1.2.0",
-        'androidxTestRules': "1.2.0",
-        'androidxTestTruth': "1.2.0",
-        'androidxTestJunit': "1.1.1",
-        'androidxTestExpresso': "3.2.0",
 
-        'junit': "4.13",
+        //
+        // Java JDK used for compiling
+        //
+        'javaSource' : JavaVersion.VERSION_1_8,
+        'javaTarget' : JavaVersion.VERSION_1_8,
+
+        //
+        // Android libraries
+        //
+        'android': [
+            'material': "1.1.0"
+        ],
+        'androidx': [
+            'core' : "1.2.0",
+            'annotation' : "1.1.0",
+            'appcompat' : "1.1.0",
+            'constraintlayout' : "1.1.3",
+            'navigation' : "2.2.1",
+            'lifecycle' : "2.2.0",
+            'testrunner': "1.2.0",
+            'testrules': "1.2.0",
+            'testtruth': "1.2.0",
+            'testjunit': "1.1.1",
+            'testexpresso': "3.2.0",
+        ],
+
+        //
+        // Testing frameworks
+        //
+        'junit': "4.13",             // update from "4.12"
         'hamcrest': "1.3",
-        'mockito': "2.28.2",
-        'powermock': "2.0.2",
+        'mockito': "2.28.2",         // If change Mockito+PowerMock+Robolectric integration,
+        'powermock': "2.0.2",        // review documentation for testing version compatibilities
         'robolectric': "4.3.1",
+        'objenesis': "3.0.1",        // force/resolve transitive from "2.6"
 
-        'release': "1.0.0-SNAPSHOT"
+        //
+        // Others
+        //
+        'errorprone': "2.3.1",       // force/resolve transitive from "2.2.0"
+        'checkerframework': "2.5.3", // force/resolve transitive from "2.5.2"
+        'animalsniffer': "1.17",     // force/resolve transitive from "1.14"
     ]
 
     ext.deps = [
+        //
+        // Plugins
+        //
+        gradlePlugins: [
+            'android': "com.android.tools.build:gradle:" + rootProject.versions.gradlePlugins.android,
+            'versions': "com.github.ben-manes:gradle-versions-plugin:" + rootProject.versions.gradlePlugins.versions,
+            'coveralls': "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:" + rootProject.versions.gradlePlugins.coveralls
+        ],
+
+        //
+        // Android libraries
+        //
         'android': [
-            'gradlePlugin': "com.android.tools.build:gradle:" + versions.gradlePlugin,
-            'material': "com.google.android.material:material:" + versions.androidMaterial
+            'material': "com.google.android.material:material:" + rootProject.versions.android.material
         ],
         'androidx': [
-            'core': "androidx.core:core:" + versions.androidxCore,
-            'appcompat': "androidx.appcompat:appcompat:" + versions.androidxAppcompat,
-            'constraintlayout': "androidx.constraintlayout:constraintlayout:" + versions.androidxConstraintlayout,
+            'core': "androidx.core:core:" + rootProject.versions.androidx.core,
+            'appcompat': "androidx.appcompat:appcompat:" + rootProject.versions.androidx.appcompat,
+            'constraintlayout': "androidx.constraintlayout:constraintlayout:" + rootProject.versions.androidx.constraintlayout,
             'navigation': [
-                'ui': "androidx.navigation:navigation-ui:" + versions.androidxNavigation,
-                'fragment': "androidx.navigation:navigation-fragment:" + versions.androidxNavigation
+                'ui': "androidx.navigation:navigation-ui:" + rootProject.versions.androidx.navigation,
+                'fragment': "androidx.navigation:navigation-fragment:" + rootProject.versions.androidx.navigation
             ],
             'lifecycle': [
-                'extensions': "androidx.lifecycle:lifecycle-extensions:" + versions.androidxLifecycle
+                'extensions': "androidx.lifecycle:lifecycle-extensions:" + rootProject.versions.androidx.lifecycle
             ],
-            'annotations': "androidx.annotation:annotation:" + versions.androidxAnnotation,
+            'annotation': "androidx.annotation:annotation:" + rootProject.versions.androidx.annotation,
             'test': [
-                'runner': "androidx.test:runner:" + versions.androidxTestRunner,
-                'rules': "androidx.test:rules:" + versions.androidxTestRules,
-                'truth': "androidx.test.ext:truth:" + versions.androidxTestTruth,
-                'ext': "androidx.test.ext:junit:" + versions.androidxTestJunit,
+                'runner': "androidx.test:runner:" + rootProject.versions.androidx.testrunner,
+                'rules': "androidx.test:rules:" + rootProject.versions.androidx.testrules,
+                'truth': "androidx.test.ext:truth:" + rootProject.versions.androidx.testtruth,
+                'junit': "androidx.test.ext:junit:" + rootProject.versions.androidx.testjunit,
                 'expresso': [
-                    'core': "androidx.test.espresso:espresso-core:" + versions.androidxTestExpresso,
-                    'intents': "androidx.test.espresso:espresso-intents:" + versions.androidxTestExpresso
+                    'core': "androidx.test.espresso:espresso-core:" + rootProject.versions.androidx.testexpresso,
+                    'intents': "androidx.test.espresso:espresso-intents:" + rootProject.versions.androidx.testexpresso
                 ]
             ]
         ],
         'lint': [
-            'core': "com.android.tools.lint:lint:" + versions.androidTools,
-            'api': "com.android.tools.lint:lint-api:" + versions.androidTools,
-            'checks': "com.android.tools.lint:lint-checks:" + versions.androidTools,
-            'tests': "com.android.tools.lint:lint-tests:" + versions.androidTools
+            'core': "com.android.tools.lint:lint:" + rootProject.versions.androidTools,
+            'api': "com.android.tools.lint:lint-api:" + rootProject.versions.androidTools,
+            'checks': "com.android.tools.lint:lint-checks:" + rootProject.versions.androidTools,
+            'tests': "com.android.tools.lint:lint-tests:" + rootProject.versions.androidTools
         ],
-        'junit': 'junit:junit:' + versions.junit,
+
+        //
+        // Testing frameworks
+        //
+        'junit': 'junit:junit:' + rootProject.versions.junit,
         'hamcrest': [
-            'core': "org.hamcrest:hamcrest-core:" + versions.hamcrest,
-            'library': "org.hamcrest:hamcrest-library:" + versions.hamcrest,
-            'integration': "org.hamcrest:hamcrest-integration:" + versions.hamcrest
+            'core': "org.hamcrest:hamcrest-core:" + rootProject.versions.hamcrest,
+            'library': "org.hamcrest:hamcrest-library:" + rootProject.versions.hamcrest,
+            'integration': "org.hamcrest:hamcrest-integration:" + rootProject.versions.hamcrest
         ],
         'mockito': [
             // Mockito for unit tests
-            'core': "org.mockito:mockito-core:" + versions.mockito,
+            'core': "org.mockito:mockito-core:" + rootProject.versions.mockito,
             // Mockito for Android tests
-            'android': "org.mockito:mockito-android:" + versions.mockito
+            'android': "org.mockito:mockito-android:" + rootProject.versions.mockito
         ],
         'powermock': [
-             'junit': "org.powermock:powermock-module-junit4:" + versions.powermock,
-             'junitRule': "org.powermock:powermock-module-junit4-rule:" + versions.powermock,
-             'mockito': "org.powermock:powermock-api-mockito2:" + versions.powermock,
-             'classloading': "org.powermock:powermock-classloading-xstream:" + versions.powermock
+             'junit': "org.powermock:powermock-module-junit4:" + rootProject.versions.powermock,
+             'junitRule': "org.powermock:powermock-module-junit4-rule:" + rootProject.versions.powermock,
+             'mockito': "org.powermock:powermock-api-mockito2:" + rootProject.versions.powermock,
+             'classloading': "org.powermock:powermock-classloading-xstream:" + rootProject.versions.powermock
         ],
         'robolectric': [
-            'core': "org.robolectric:robolectric:" + versions.robolectric,
-            'annotations': "org.robolectric:annotations:" + versions.robolectric
-        ]
+            'core': "org.robolectric:robolectric:" + rootProject.versions.robolectric,
+            'annotations': "org.robolectric:annotations:" + rootProject.versions.robolectric
+        ],
+        'objenesis': "org.objenesis:objenesis:" + rootProject.versions.objenesis
     ]
 
     repositories {
@@ -98,9 +150,9 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:" + versions.gradlePlugin
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.28.0"
-        classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:" + versions.coverallsPlugin
+        classpath rootProject.deps.gradlePlugins.android
+        classpath rootProject.deps.gradlePlugins.versions
+        classpath rootProject.deps.gradlePlugins.coveralls
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -117,19 +169,19 @@ subprojects { project ->
         jcenter()
     }
 
-    //resolve transitive dependency conflicts/duplications
+    //resolve classpath transitive dependency conflicts/duplications
     configurations.all {
         // junit 4.12 -> 4.13
-        resolutionStrategy.force rootProject.ext.deps.junit
+        resolutionStrategy.force rootProject.deps.junit
         // error_prone_annotations 2.2.0 -> 2.3.1
-        resolutionStrategy.force "com.google.errorprone:error_prone_annotations:2.3.1"
-        // checkerframework 2.5.2 -> 2.3.1
-        resolutionStrategy.force "org.checkerframework:compat-qual:2.5.3"
-        resolutionStrategy.force "org.checkerframework:checker-qual:2.5.3"
+        resolutionStrategy.force "com.google.errorprone:error_prone_annotations:" + rootProject.versions.errorprone
+        // checkerframework 2.5.2 -> 2.5.3
+        resolutionStrategy.force "org.checkerframework:compat-qual:" + rootProject.versions.checkerframework
+        resolutionStrategy.force "org.checkerframework:checker-qual:" + rootProject.versions.checkerframework
         // animal-sniffer-annotations 1.14 -> 1.17
-        resolutionStrategy.force "org.codehaus.mojo:animal-sniffer-annotations:1.17"
+        resolutionStrategy.force "org.codehaus.mojo:animal-sniffer-annotations:" + rootProject.versions.animalsniffer
         // objenesis 2.6 -> 3.0.1
-        resolutionStrategy.force "org.objenesis:objenesis:3.0.1"
+        resolutionStrategy.force rootProject.deps.objenesis
     }
 }
 

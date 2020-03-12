@@ -4,7 +4,11 @@
     <option name="actions">
       <set>
         <option value="activateOnBatch" />
+        <option value="noActionIfCompileErrors" />
         <option value="organizeImports" />
+        <option value="missingOverrideAnnotation" />
+        <option value="generateSerialVersionUID" />
+        <option value="suppressAnnotation" />
       </set>
     </option>
     <option name="configurationPath" value="" />
